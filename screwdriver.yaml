@@ -1,5 +1,22 @@
+workflow:
+    - deploy
+
 jobs:
     main:
         image: node:6
         steps:
-            - unittests: npm install && npm test
+            - hello: echo hello
+            # - install: npm install
+            # - test: npm test
+    deploy:
+        image: node:6
+        steps:
+            - heroku: |
+                wget https://cli-assets.heroku.com/branches/stable/heroku-linux-amd64.tar.gz -O heroku.tar.gz
+                mkdir -p /usr/local/lib
+                tar -xvzf heroku.tar.gz -C /usr/local/lib
+                /usr/local/lib/heroku/install
+            - herokuversion: heroku --version
+            - env: env
+        secrets:
+            - HEROKU_SSH
