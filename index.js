@@ -32,3 +32,8 @@ app.get('/', function (req, res, next) {
 });
 
 module.exports = app;
+port = process.env.PORT;
+if (port == undefined) {
+    port = 7000
+}
+app.listen(port);
